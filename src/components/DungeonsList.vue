@@ -13,8 +13,8 @@
         </span>
       </div>
     </div>
-    <div class="hide-scroll">
-      <ul id="dungList" ref="dungList" class="list-group">
+    <hidden-scrollbar class="scroll-container">
+      <ul slot="scrollContent" class="list-group">
         <li
           is="dung-list-item"
           v-for="(dung, index) in dungeons"
@@ -24,18 +24,20 @@
           v-on:remove="del(dung)"
           class="list-group-item"></li>
       </ul>
-    </div>
+    </hidden-scrollbar>
   </div>
 </template>
 
 <script>
 import DungListItem from '@/components/DungListItem'
+import HiddenScrollbar from '@/components/HiddenScrollbar'
 import store from '@/vuex/store'
 
 export default {
   name: 'dungeons-list',
   components: {
-    DungListItem
+    DungListItem,
+    HiddenScrollbar
   },
   data () {
     return {
@@ -45,10 +47,6 @@ export default {
   computed: {
     dungeons () {
       return store.getters.dungeons
-    },
-    scrollbarWidth () {
-      var sbw = store.getters.scrollbarWidth
-      return sbw === undefined ? '00' : sbw
     }
   },
   methods: {
@@ -85,11 +83,6 @@ export default {
     del (dung) {
       store.dispatch('remDung', dung)
     }
-  },
-  mounted () {
-    var el = this.$refs.dungList
-    var offset = this.scrollbarWidth
-    el.style.marginRight = '-1' + offset + 'px'
   }
 }
 </script>
@@ -108,14 +101,7 @@ export default {
   height: 10%;
 }
 
-.hide-scroll {
-  overflow: hidden;
+.scroll-container {
   height: 83%;
-}
-
-#dungList {
-  max-height: 100%;
-  padding-right: 100px;
-  overflow-y: auto;
 }
 </style>

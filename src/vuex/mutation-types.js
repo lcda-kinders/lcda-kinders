@@ -1,7 +1,3 @@
-
-// scrollbar width
-export const SET_SCROLLBAR_WIDTH = 'SET_SCROLLBAR_WIDTH'
-
 // characters list
 export const ADD_CHAR_LIST_ITEM = 'ADD_CHAR_LIST_ITEM'
 export const REM_CHAR_LIST_ITEM = 'REM_CHAR_LIST_ITEM'

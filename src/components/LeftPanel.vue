@@ -15,35 +15,35 @@
       </div>
     </div>
 
-    <div class="hide-scroll">
-      <div class="scrollable" id="scrollable" ref="scrollable">
-        <transition-group
-          tag="ul"
-          name="charListTransition"
-          id="charList"
-          class="nav nav-pills nav-stacked">
-          <li
-            is="char-list-item"
-            v-for="(char, index) in characters"
-            v-bind:key="char"
-            v-bind:title="char.name"
-            v-bind:class="{ active: char.active }"
-            v-on:activate="activate(char)"
-            class="charListTransition-item"></li>
-        </transition-group>
-      </div>
-    </div>
+    <hidden-scrollbar class="scroll-container">
+      <ul
+      slot="scrollContent"
+      is="transition-group"
+      name="charListTransition"
+      class="nav nav-pills nav-stacked">
+        <li
+        is="char-list-item"
+        v-for="(char, index) in characters"
+        v-bind:key="char"
+        v-bind:title="char.name"
+        v-bind:class="{ active: char.active }"
+        v-on:activate="activate(char)"
+        class="charListTransition-item"></li>
+      </ul>
+    </hidden-scrollbar>
   </div>
 </template>
 
 <script>
 import CharListItem from '@/components/CharListItem'
+import HiddenScrollbar from '@/components/HiddenScrollbar'
 import store from '@/vuex/store'
 
 export default {
   name: 'left-pannel',
   components: {
-    CharListItem
+    CharListItem,
+    HiddenScrollbar
   },
   data () {
     return {
@@ -53,10 +53,6 @@ export default {
   computed: {
     characters () {
       return store.getters.charListItems.list
-    },
-    scrollbarWidth () {
-      var sbw = store.getters.scrollbarWidth
-      return sbw === undefined ? '00' : sbw
     }
   },
   methods: {
@@ -91,11 +87,6 @@ export default {
       }
       return false
     }
-  },
-  mounted () {
-    var el = this.$refs.scrollable
-    var offset = this.scrollbarWidth
-    el.style.marginRight = '-1' + offset + 'px'
   }
 }
 </script>
@@ -117,20 +108,8 @@ export default {
   height: 13%;
 }
 
-.hide-scroll {
-  overflow: hidden;
+.scroll-container {
   height: 80%;
-}
-
-.scrollable {
-  max-height: 100%;
-  /*margin-right: -113px;*/
-  padding-right: 100px;
-  overflow-y: scroll;
-}
-
-#charList {
-  height: 100%;
 }
 
 .charListTransition-enter, .charListTransition-leave-to, .charListTransition-leave-active {

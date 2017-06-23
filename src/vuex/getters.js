@@ -1,7 +1,4 @@
 
-// scrollbar width
-export const scrollbarWidth = state => state.scrollbarWidth.main
-
 // characters list
 export const charListItems = state => state.charListItems.main
 

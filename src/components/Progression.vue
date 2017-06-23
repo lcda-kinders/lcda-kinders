@@ -12,33 +12,33 @@
         </tr>
       </thead>
     </table>
-    <div class="hide-scroll">
-      <div class="scrollable" id="scrollable" ref="scrollable">
-        <table class="table table-bordered">
-          <tbody
-            is="transition-group"
-            name="progressTransition">
-            <tr
-            is="progression-row"
-            v-for="(dung, index) in dungeons"
-            v-bind:key="dung"
-            v-bind:item="dung">
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <hidden-scrollbar class="scroll-container">
+      <table slot="scrollContent" class="table table-bordered">
+        <tbody
+          is="transition-group"
+          name="progressTransition">
+          <tr
+          is="progression-row"
+          v-for="(dung, index) in dungeons"
+          v-bind:key="dung"
+          v-bind:item="dung">
+          </tr>
+        </tbody>
+      </table>
+    </hidden-scrollbar>
   </div>
 </template>
 
 <script>
 import ProgressionRow from '@/components/ProgressionRow'
+import HiddenScrollbar from '@/components/HiddenScrollbar'
 import store from '@/vuex/store'
 
 export default {
   name: 'progression',
   components: {
-    ProgressionRow
+    ProgressionRow,
+    HiddenScrollbar
   },
   computed: {
     currentCharIs () {
@@ -51,10 +51,6 @@ export default {
           return prog[i].dungeons
         }
       }
-    },
-    scrollbarWidth () {
-      var sbw = store.getters.scrollbarWidth
-      return sbw === undefined ? '00' : sbw
     }
   },
   methods: {
@@ -65,11 +61,6 @@ export default {
       }
       store.dispatch('orderProgressByDiff', r)
     }
-  },
-  mounted () {
-    var el = this.$refs.scrollable
-    var offset = this.scrollbarWidth
-    el.style.marginRight = '-1' + offset + 'px'
   }
 }
 </script>
@@ -90,16 +81,8 @@ export default {
   border: 0;
 }
 
-.hide-scroll {
-  overflow: hidden;
+.scroll-container {
   height: 90%;
-}
-
-.scrollable {
-  max-height: 100%;
-  /*margin-right: -113px;*/
-  padding-right: 100px;
-  overflow-y: scroll;
 }
 
 table {

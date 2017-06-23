@@ -1,10 +1,5 @@
 import * as types from './mutation-types'
 
-// scrollbar width
-export const setScrollbarWidth = ({ commit }, payload) => {
-  commit(types.SET_SCROLLBAR_WIDTH, payload)
-}
-
 // characters list
 export const addCharListItem = ({ commit }, payload) => {
   commit(types.ADD_CHAR_LIST_ITEM, payload)
